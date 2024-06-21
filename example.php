@@ -23,48 +23,16 @@ td input {
 <body>
 
 <table id="table" class="table">
-   <caption>Optional table caption.</caption>
+   <caption>Таблица с внесенными данными</caption>
    <thead id="thead">
-      <tr id="0">
-         <!-- <th>Nr</th>
-         <th>Description</th>
-         <th>Description_RUS</th>
-         <th>Country</th>
-         <th>Qantity</th>
-         <th>Price_EUR</th>
-         <th>Amount_EUR</th>
-         <th>Amount_RUB</th>
-         <th><button onclick="deleteAll()">Очистить</button></th> -->
-      </tr>
+      <tr id="0"></tr>
    </thead>
-   <tbody id="tbody">
-      <!-- <tr id="1">
-         <th>1</th>
-         <td>Table cell</td>
-         <td>Table cell</td>
-         <td>Table cell</td>
-         <td><input type="text" name="Qantity"/></td>
-         <td><input type="text" name="Price_EUR"/></td>
-         <td><input type="text" name="Amount_EUR"/></td>
-         <td><input type="text" name="Amount_RUB"/></td>
-         <td><button onclick="deleteNr()">Удалить</button></td>
-      </tr>
-      <tr id="2">
-         <th>2</th>
-         <td>Table cell</td>
-         <td>Table cell</td>
-         <td>Table cell</td>
-         <td><input type="text" name="Qantity"/></td>
-         <td><input type="text" name="Price_EUR"/></td>
-         <td><input type="text" name="Amount_EUR"/></td>
-         <td><input type="text" name="Amount_RUB"/></td>
-         <td><button onclick="deleteNr()">Удалить</button></td> -->
-   </tbody>
+   <tbody id="tbody"></tbody>
    <tfoot>
       <tr>
-         <td colspan="6" style="text-align: right; padding-right: 10px;">Средняя цена:</td>
-         <td style="text-align: left; padding-left: 10px;">$758.8</td>
-         <td style="text-align: left; padding-left: 10px;">$758.8</td>
+         <td colspan="6" style="text-align: right; padding-right: 10px;">Цена:</td>
+         <td style="text-align: left; padding-left: 10px;">&#x20AC; 758.8 EURO</td>
+         <td style="text-align: left; padding-left: 10px;">&#x20bd; 758.8 RUB</td>
          <td></td>
       </tr>
    </tfoot>
@@ -92,10 +60,10 @@ td input {
          <td><input type="text" id="Description" name="Description" placeholder="Description"/></td>
          <td><input type="text" id="Description_RUS" name="Description_RUS" placeholder="Description_RUS"/></td>
          <td><input type="text" id="Country" name="Country" placeholder="Country"/></td>
-         <td><input type="text" id="Qantity" name="Qantity" placeholder="Qantity"/></td>
-         <td><input type="text" id="Price_EUR" name="Price_EUR" placeholder="Price_EUR"/></td>
-         <td><input type="text" id="Amount_EUR" name="Amount_EUR" placeholder="Amount_EUR"/></td>
-         <td><input type="text" id="Amount_RUB" name="Amount_RUB" placeholder="Amount_RUB"/></td>
+         <td><input type="number" id="Qantity" name="Qantity" placeholder="Qantity"/></td>
+         <td><input type="number" id="Price_EUR" name="Price_EUR" placeholder="Price_EUR"/></td>
+         <td><input type="number" id="Amount_EUR" name="Amount_EUR" placeholder="Amount_EUR"/></td>
+         <td><input type="number" id="Amount_RUB" name="Amount_RUB" placeholder="Amount_RUB"/></td>
       </tr>
    </tbody>
    <tfoot>
@@ -108,6 +76,7 @@ td input {
 
 
 <script>
+   // главный массив
    let data = [
       [
          'Nr',
@@ -121,6 +90,7 @@ td input {
       ]
    ];
 
+   // полностью переписать
    function allAdd(data) {
       let head = document.getElementById('0');
       let tbody = document.getElementById('tbody');
@@ -132,12 +102,38 @@ td input {
 
             data[key][0] = key;
 
-            data[key].forEach((value) => {
+            data[key].forEach((value, key) => {
                let col = document.createElement('td');
+               if(key == 4 || key == 5 || key == 6 || key == 7) {
+                  let input = document.createElement('input');
+                  input.type = 'number'
+                  input.name = data[0][key]
+                  input.value = value
 
-               col.innerHTML = value;
-               row.append(col);
+                  col.append(input)
+                  row.append(col);
+
+               }
+               else {
+                  if(key != 0) {
+                     let textarea = document.createElement('textarea');
+                     textarea.type = 'number'
+                     textarea.name = data[0][key]
+                     textarea.value = value
+
+                     col.append(textarea)
+                     row.append(col);
+
+                  }
+                  else {
+                     let col = document.createElement('th');
+                     col.innerHTML = value;
+                     row.append(col);
+                  }
+
+               }
             });
+
             col = document.createElement('th');
             col.append(buttonAdd(key));
             row.append(col);
@@ -156,14 +152,39 @@ td input {
       }
    }
 
+   // добавить новое поле
    function newAdd(newRow) {
       let tr = document.createElement('tr');
       tr.id = String(newRow[0]);
 
-      newRow.forEach((value) => {
-         let col = document.createElement('td');
-         col.innerHTML = value;
-         tr.append(col);
+
+      newRow.forEach((value, key) => {
+         if(key != 0) {
+            let col = document.createElement('td');
+            if(key == 4 || key == 5 || key == 6 || key == 7) {
+               let input = document.createElement('input');
+               input.type = 'number'
+               input.name = data[0][key]
+               input.value = value
+
+               col.append(input)
+            }
+            else {
+               let textarea = document.createElement('textarea');
+               textarea.name = data[0][key]
+               textarea.innerHTML = value
+
+               col.append(textarea)
+            }
+
+            tr.append(col);
+         }
+         else {
+            let col = document.createElement('th');
+            col.innerHTML = value;
+            tr.append(col);
+         }
+         
       });
 
       let col = document.createElement('th');
@@ -175,8 +196,9 @@ td input {
       tbody.append(tr);
    }
 
-
+   // данные для нового поля
    function rowCreate() {
+      // получаем данные из формы ввода и заносим их в массив
       let newRow = [];
       newRow.push(
          document.getElementById('Nr').innerHTML,
@@ -187,13 +209,13 @@ td input {
          document.getElementById('Price_EUR').value,
          document.getElementById('Amount_EUR').value,
          document.getElementById('Amount_RUB').value,
-         // 'button'
       );
 
-      data.push(newRow);
+      data.push(newRow); // херачим данные в главный массив
 
-      newAdd(newRow);
+      newAdd(newRow); // передаем данные для нового поля
 
+      // очшщаем форму ввода и увеличиваем в ней Nr
       let Nr = Number(document.getElementById('Nr').innerHTML);
       document.getElementById('Nr').innerHTML = ++Nr;
       document.getElementById('Description').value = '';
@@ -203,9 +225,9 @@ td input {
       document.getElementById('Price_EUR').value = '';
       document.getElementById('Amount_EUR').value = '';
       document.getElementById('Amount_RUB').value = '';
-
    }
 
+   // возвращаем объект кнопки
    function buttonAdd(id) {
       let btn = document.createElement('button');
       let btnName = 'Удалить';
@@ -221,17 +243,20 @@ td input {
       return btn;
    }
 
+   // удаляем одну запись
    function deleteNr(id) {
+      // стираем все таблицы
       document.getElementById('0').innerHTML = '';
       document.getElementById('tbody').innerHTML = '';
-
+      // удаляем запись из главного массива 
       data.splice(id, 1)
-
+      // выставляем правилбный Nr в форме ввода
       document.getElementById('Nr').innerHTML = data.length;
-
+      // отриыовываем все таблицы
       allAdd(data);
    }
 
+   // удаляем все записи кроме основной с нулевым айди
    function deleteAll() {
       document.getElementById('0').innerHTML = '';
       document.getElementById('tbody').innerHTML = '';
@@ -240,6 +265,7 @@ td input {
       allAdd(data);
    }
 
+   // первичная отрисовка
    function add(Nr) {
       allAdd(data)
       document.getElementById('Nr').innerHTML = Nr;
