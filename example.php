@@ -30,10 +30,12 @@ td input {
    <tbody id="tbody"></tbody>
    <tfoot>
       <tr>
-         <td colspan="6" style="text-align: right; padding-right: 10px;">Цена:</td>
-         <td style="text-align: left; padding-left: 10px;">&#x20AC; 758.8 EURO</td>
-         <td style="text-align: left; padding-left: 10px;">&#x20bd; 758.8 RUB</td>
-         <td></td>
+         <td colspan="4" style="text-align: left; padding-left: 10px;">TOTAL:</td>
+         <td style="text-align: left; padding-left: 10px;"><span id="Qantity"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="Price_EUR"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="Amount_EUR"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span>&#x20bd;&#160;</span><span id="Amount_RUB"></span></td>
+         <td style="text-align: center;"><button onclick="calculator()">Пересчитать</button></td>
       </tr>
    </tfoot>
 </table>
@@ -77,18 +79,24 @@ td input {
 
 <script>
    // главный массив
-   let data = [
+   var data = [
       [
-         'Nr',
-         'Description',
-         'Description_RUS',
-         'Country',
-         'Qantity',
-         'Price_EUR',
-         'Amount_EUR',
-         'Amount_RUB',
+         'Nr',              // 0
+         'Description',     // 1
+         'Description_RUS', // 2
+         'Country',         // 3
+         'Qantity',         // 4
+         'Price_EUR',       // 5
+         'Amount_EUR',      // 6
+         'Amount_RUB',      // 7
       ]
    ];
+
+   // 
+   var Qantity = document.getElementById('Qantity');
+   var Price_EUR = document.getElementById('Price_EUR');
+   var Amount_EUR = document.getElementById('Amount_EUR');
+   var Amount_RUB = document.getElementById('Amount_RUB');
 
    // полностью переписать
    function allAdd(data) {
@@ -263,12 +271,37 @@ td input {
       document.getElementById('Nr').innerHTML = 1;
       data.splice(1);
       allAdd(data);
+      totalReset();
+   }
+
+   // TODO: продумать калькулятор
+   // 4 Qantity = 0;
+   // 5 Price_EUR = 0;
+   // 6 Amount_EUR = 0;
+   // 7 Amount_RUB = 0;
+   function calculator(all = true) {
+      if(all) {
+         data.forEach((value, key) => {
+            if(key != 0) {
+               console.log(value[4]);
+            }
+         });
+      }
+   }
+
+   // обнуляем цены
+   function totalReset() {
+      Qantity.innerHTML = 0;
+      Price_EUR.innerHTML = 0;
+      Amount_EUR.innerHTML = 0;
+      Amount_RUB.innerHTML = 0;
    }
 
    // первичная отрисовка
    function add(Nr) {
       allAdd(data)
       document.getElementById('Nr').innerHTML = Nr;
+      totalReset();
    }
 
    window.onload = add(1);
