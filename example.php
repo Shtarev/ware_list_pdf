@@ -31,10 +31,10 @@ td input {
    <tfoot>
       <tr>
          <td colspan="4" style="text-align: left; padding-left: 10px;">TOTAL:</td>
-         <td style="text-align: left; padding-left: 10px;"><span id="Qantity"></span></td>
-         <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="Price_EUR"></span></td>
-         <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="Amount_EUR"></span></td>
-         <td style="text-align: left; padding-left: 10px;"><span>&#x20bd;&#160;</span><span id="Amount_RUB"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span id="showQantity"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="showPrice_EUR"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="showAmount_EUR"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span>&#x20bd;&#160;</span><span id="showAmount_RUB"></span></td>
          <td style="text-align: center;"><button onclick="calculator()">Пересчитать</button></td>
       </tr>
    </tfoot>
@@ -93,10 +93,19 @@ td input {
    ];
 
    // 
+   var Nr = document.getElementById('Nr');
+   var Description = document.getElementById('Description');
+   var Description_RUS = document.getElementById('Description_RUS');
+   var Country = document.getElementById('Country');
    var Qantity = document.getElementById('Qantity');
    var Price_EUR = document.getElementById('Price_EUR');
    var Amount_EUR = document.getElementById('Amount_EUR');
    var Amount_RUB = document.getElementById('Amount_RUB');
+
+   var showQantity = document.getElementById('showQantity');
+   var showPrice_EUR = document.getElementById('showPrice_EUR');
+   var showAmount_EUR = document.getElementById('showAmount_EUR');
+   var showAmount_RUB = document.getElementById('showAmount_RUB');
 
    // полностью переписать
    function allAdd(data) {
@@ -158,6 +167,7 @@ td input {
             head.append(col);
          }
       }
+      calculator();
    }
 
    // добавить новое поле
@@ -202,21 +212,30 @@ td input {
 
       let tbody = document.getElementById('tbody');
       tbody.append(tr);
+
+      calculator();
    }
+   // проверяем данные из формы ввода
+
 
    // данные для нового поля
    function rowCreate() {
-      // получаем данные из формы ввода и заносим их в массив
+      let ic = inputCheck();
+      if(ic !== 'ok') {
+         alert(ic);
+         return;
+      }
+
       let newRow = [];
       newRow.push(
-         document.getElementById('Nr').innerHTML,
-         document.getElementById('Description').value,
-         document.getElementById('Description_RUS').value,
-         document.getElementById('Country').value,
-         document.getElementById('Qantity').value,
-         document.getElementById('Price_EUR').value,
-         document.getElementById('Amount_EUR').value,
-         document.getElementById('Amount_RUB').value,
+         Nr.innerHTML,
+         Description.value,
+         Description_RUS.value,
+         Country.value,
+         Qantity.value,
+         Price_EUR.value,
+         Amount_EUR.value,
+         Amount_RUB.value
       );
 
       data.push(newRow); // херачим данные в главный массив
@@ -224,15 +243,23 @@ td input {
       newAdd(newRow); // передаем данные для нового поля
 
       // очшщаем форму ввода и увеличиваем в ней Nr
-      let Nr = Number(document.getElementById('Nr').innerHTML);
-      document.getElementById('Nr').innerHTML = ++Nr;
-      document.getElementById('Description').value = '';
-      document.getElementById('Description_RUS').value = '';
-      document.getElementById('Country').value = '';
-      document.getElementById('Qantity').value = '';
-      document.getElementById('Price_EUR').value = '';
-      document.getElementById('Amount_EUR').value = '';
-      document.getElementById('Amount_RUB').value = '';
+      let NrPlus = Nr.innerHTML;
+      Nr.innerHTML = ++NrPlus;
+      Description.value = '';
+      Description_RUS.value = '';
+      Country.value = '';
+      Qantity.value = '';
+      Price_EUR.value = '';
+      Amount_EUR.value = '';
+      Amount_RUB.value = '';
+   }
+
+   function inputCheck() {
+      if (Qantity.value === '') {return 'Поле Qantity должно быть числом или числом с точкой и не содержать пробелов'}
+      if (Price_EUR.value === '') {return 'Поле Price_EUR должно быть числом или числом с точкой и не содержать пробелов'}
+      if (Amount_EUR.value === '') {return 'Поле Amount_EUR должно быть числом или числом с точкой и не содержать пробелов'}
+      if (Amount_RUB.value === '') {return 'Поле Amount_RUB должно быть числом или числом с точкой и не содержать пробелов'}
+      return 'ok';
    }
 
    // возвращаем объект кнопки
@@ -280,21 +307,36 @@ td input {
    // 6 Amount_EUR = 0;
    // 7 Amount_RUB = 0;
    function calculator(all = true) {
+      res = [0,0,0,0];
+
       if(all) {
          data.forEach((value, key) => {
             if(key != 0) {
-               console.log(value[4]);
+               res = [
+                  res[0] + Number(value[4]),
+                  res[1] + Number(value[5]),
+                  res[2] + Number(value[6]),
+                  res[3] + Number(value[7])
+               ];
             }
          });
       }
+
+      totalReset(res);
    }
 
-   // обнуляем цены
-   function totalReset() {
-      Qantity.innerHTML = 0;
-      Price_EUR.innerHTML = 0;
-      Amount_EUR.innerHTML = 0;
-      Amount_RUB.innerHTML = 0;
+   // обнуляем | выставляем цены
+   function totalReset(res = [0,0,0,0]) {
+      showQantity.innerHTML = res[0];
+      showPrice_EUR.innerHTML = res[1];
+      showAmount_EUR.innerHTML = res[2];
+      showAmount_RUB.innerHTML = res[3];
+   }
+
+   // TODO: change inputs
+   function changes(e) {
+      console.log(e)
+
    }
 
    // первичная отрисовка
