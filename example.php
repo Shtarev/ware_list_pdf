@@ -117,7 +117,7 @@ td input {
    var showAmount_RUB = document.getElementById('showAmount_RUB');
 
    // полностью переписать
-   function allAdd(data) {
+   function allAdd() {
       let head = document.getElementById('0');
       let tbody = document.getElementById('tbody');
 
@@ -289,7 +289,7 @@ td input {
       // выставляем правилбный Nr в форме ввода
       document.getElementById('Nr').innerHTML = data.length;
       // отриыовываем все таблицы
-      allAdd(data);
+      allAdd();
    }
 
    // удаляем все записи кроме основной с нулевым айди
@@ -298,7 +298,7 @@ td input {
       document.getElementById('tbody').innerHTML = '';
       document.getElementById('Nr').innerHTML = 1;
       data.splice(1);
-      allAdd(data);
+      allAdd();
       totalReset();
    }
 
@@ -355,7 +355,7 @@ td input {
 
    // первичная отрисовка
    function add(Nr) {
-      allAdd(data)
+      allAdd()
       document.getElementById('Nr').innerHTML = Nr;
       totalReset();
    }
