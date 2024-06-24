@@ -76,7 +76,6 @@ td input {
    </tfoot>
 </table>
 
-
 <script>
    // главный массив
    var data = [
@@ -103,7 +102,6 @@ td input {
       'Amount_RUB': 7,      // 7
    };
 
-   // 
    var Nr = document.getElementById('Nr');
    var Description = document.getElementById('Description');
    var Description_RUS = document.getElementById('Description_RUS');
@@ -127,7 +125,6 @@ td input {
          if(key != 0) {
             let row = document.createElement('tr');
             row.id = String(key);
-
             data[key][0] = key;
 
             data[key].forEach((value, k) => {
@@ -135,32 +132,27 @@ td input {
                if(k == 4 || k == 5 || k == 6 || k == 7) {
                   let input = document.createElement('input');
                   input.type = 'number'
-                  input.name = data[0][k]
-                  input.value = value
+                  input.name = data[0][k];
+                  input.value = value;
                   input.setAttribute('oninput', 'changes(' +  key + ', "' + data[0][k] + '", this)');
-
                   col.append(input)
                   row.append(col);
-
                }
                else {
                   if(k != 0) {
                      let textarea = document.createElement('textarea');
                      textarea.type = 'number'
-                     textarea.name = data[0][k]
-                     textarea.value = value
+                     textarea.name = data[0][k];
+                     textarea.value = value;
                      textarea.setAttribute('oninput', 'changes(' +  key + ', "' + data[0][k] + '", this)');
-
-                     col.append(textarea)
+                     col.append(textarea);
                      row.append(col);
-
                   }
                   else {
                      let col = document.createElement('th');
                      col.innerHTML = value;
                      row.append(col);
                   }
-
                }
             });
 
@@ -188,26 +180,23 @@ td input {
       let tr = document.createElement('tr');
       tr.id = String(newRow[0]);
 
-
       newRow.forEach((value, key) => {
          if(key != 0) {
             let col = document.createElement('td');
             if(key == 4 || key == 5 || key == 6 || key == 7) {
                let input = document.createElement('input');
                input.type = 'number'
-               input.name = data[0][key]
-               input.value = value
+               input.name = data[0][key];
+               input.value = value;
                input.setAttribute('oninput', 'changes(' +  newRow[0] + ', "' + data[0][key] + '", this)');
-
-               col.append(input)
+               col.append(input);
             }
             else {
                let textarea = document.createElement('textarea');
-               textarea.name = data[0][key]
-               textarea.innerHTML = value
+               textarea.name = data[0][key];
+               textarea.innerHTML = value;
                textarea.setAttribute('oninput', 'changes(' +  newRow[0] + ', "' + data[0][key] + '", this)');
-
-               col.append(textarea)
+               col.append(textarea);
             }
 
             tr.append(col);
@@ -217,7 +206,6 @@ td input {
             col.innerHTML = value;
             tr.append(col);
          }
-         
       });
 
       let col = document.createElement('th');
@@ -230,8 +218,6 @@ td input {
 
       calculator();
    }
-   // проверяем данные из формы ввода
-
 
    // данные для нового поля
    function rowCreate() {
@@ -316,7 +302,7 @@ td input {
       totalReset();
    }
 
-   // TODO: продумать калькулятор
+   // калькулятор
    // 4 Qantity = 0;
    // 5 Price_EUR = 0;
    // 6 Amount_EUR = 0;
@@ -348,30 +334,23 @@ td input {
       showAmount_RUB.innerHTML = res[3];
    }
 
-   // TODO: change inputs
+   // изменения в инпуте
    function changes(Nr, name, e) {
-      console.log(Nr)
-      console.log(name)
-      console.log(e)
-
       if(name == 'Qantity' || name == 'Price_EUR' || name == 'Amount_EUR' || name == 'Amount_RUB') {
-         // TODO: вернуть в инпут цифру
          if(e.value === '') {
             alert('Поле ' + name + ' должно быть числом или числом с точкой и не содержать пробелов');
+            e.value = data[Nr][dataMatrix[name]];
+            calculator();
             return;
          }
          else {
             data[Nr][dataMatrix[name]] = e.value;
             calculator();
-            console.log('zifer')
          }
-
       }
       else {
          data[Nr][dataMatrix[name]] = e.value;
-         console.log('text')
       }
-
    }
 
    // первичная отрисовка
