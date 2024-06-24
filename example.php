@@ -92,6 +92,17 @@ td input {
       ]
    ];
 
+   var dataMatrix = {
+      'Nr': 0,              // 0
+      'Description': 1,     // 1
+      'Description_RUS': 2, // 2
+      'Country': 3,         // 3
+      'Qantity': 4,         // 4
+      'Price_EUR': 5,       // 5
+      'Amount_EUR': 6,      // 6
+      'Amount_RUB': 7,      // 7
+   };
+
    // 
    var Nr = document.getElementById('Nr');
    var Description = document.getElementById('Description');
@@ -119,24 +130,26 @@ td input {
 
             data[key][0] = key;
 
-            data[key].forEach((value, key) => {
+            data[key].forEach((value, k) => {
                let col = document.createElement('td');
-               if(key == 4 || key == 5 || key == 6 || key == 7) {
+               if(k == 4 || k == 5 || k == 6 || k == 7) {
                   let input = document.createElement('input');
                   input.type = 'number'
-                  input.name = data[0][key]
+                  input.name = data[0][k]
                   input.value = value
+                  input.setAttribute('oninput', 'changes(' +  key + ', "' + data[0][k] + '", this)');
 
                   col.append(input)
                   row.append(col);
 
                }
                else {
-                  if(key != 0) {
+                  if(k != 0) {
                      let textarea = document.createElement('textarea');
                      textarea.type = 'number'
-                     textarea.name = data[0][key]
+                     textarea.name = data[0][k]
                      textarea.value = value
+                     textarea.setAttribute('oninput', 'changes(' +  key + ', "' + data[0][k] + '", this)');
 
                      col.append(textarea)
                      row.append(col);
@@ -184,6 +197,7 @@ td input {
                input.type = 'number'
                input.name = data[0][key]
                input.value = value
+               input.setAttribute('oninput', 'changes(' +  newRow[0] + ', "' + data[0][key] + '", this)');
 
                col.append(input)
             }
@@ -191,6 +205,7 @@ td input {
                let textarea = document.createElement('textarea');
                textarea.name = data[0][key]
                textarea.innerHTML = value
+               textarea.setAttribute('oninput', 'changes(' +  newRow[0] + ', "' + data[0][key] + '", this)');
 
                col.append(textarea)
             }
@@ -334,8 +349,28 @@ td input {
    }
 
    // TODO: change inputs
-   function changes(e) {
+   function changes(Nr, name, e) {
+      console.log(Nr)
+      console.log(name)
       console.log(e)
+
+      if(name == 'Qantity' || name == 'Price_EUR' || name == 'Amount_EUR' || name == 'Amount_RUB') {
+         // TODO: вернуть в инпут цифру
+         if(e.value === '') {
+            alert('Поле ' + name + ' должно быть числом или числом с точкой и не содержать пробелов');
+            return;
+         }
+         else {
+            data[Nr][dataMatrix[name]] = e.value;
+            calculator();
+            console.log('zifer')
+         }
+
+      }
+      else {
+         data[Nr][dataMatrix[name]] = e.value;
+         console.log('text')
+      }
 
    }
 
