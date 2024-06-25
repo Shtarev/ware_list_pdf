@@ -21,6 +21,45 @@ td input {
 }
 </style>
 <body>
+<table class="table">
+   <caption>Отправитель / Получатель</caption>
+   <tbody>
+      <tr>
+         <th rowspan="4">DATE: </th>
+         <td></td>
+
+         <th rowspan="4">SELLER: </th>
+         <td><input type="text" id="" name="seller_name" placeholder="Oksana Morozova"/></td>
+      </tr>
+      <tr>
+         <td><input type="text" id="" name="date_date" placeholder="Дата"/></td>
+         <td><input type="text" id="" name="seller_street" placeholder="Nordring 66"/></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td><input type="text" id="" name="seller_coutry" placeholder="44787 Bochum, Germany"/></td>
+      </tr>
+   </tbody>
+
+   <tbody>
+      <tr>
+         <th rowspan="4">FROM: </th>
+         <td></td>
+
+         <th rowspan="4">BUYER: </th>
+         <td><input type="text" id="" name="buyer_name" placeholder="Andrey Shtarev"/></td>
+      </tr>
+      <tr>
+         <td><input type="text" id="" name="from_data" placeholder="Дата"/></td>
+         <td><input type="text" id="" name="buyer_street" placeholder="1-Sovetsky per. 28-34"/></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td><input type="text" id="" name="buyer_coutry" placeholder="141100 Shelkovo, Russia"/></td>
+      </tr>
+   </tbody>
+</table>
+<br><br>
 
 <table id="table" class="table">
    <caption>Таблица с внесенными данными</caption>
@@ -39,7 +78,7 @@ td input {
       </tr>
    </tfoot>
 </table>
-<br>
+<br><br><br>
 <hr>
 <br>
 <table class="table">
