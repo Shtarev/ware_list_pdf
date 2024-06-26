@@ -74,7 +74,7 @@ td input {
          <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="showPrice_EUR"></span></td>
          <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="showAmount_EUR"></span></td>
          <td style="text-align: left; padding-left: 10px;"><span>&#x20bd;&#160;</span><span id="showAmount_RUB"></span></td>
-         <td style="text-align: center;"><button onclick="calculator()">Пересчитать</button></td>
+         <td style="text-align: center;"></td>
       </tr>
    </tfoot>
 </table>
@@ -115,6 +115,10 @@ td input {
    </tfoot>
 </table>
 
+<center>
+   <button onclick="sendToWork()">Получить PDF</button>
+</center>
+
 <script>
    // главный массив
    var data = [
@@ -153,6 +157,11 @@ td input {
       'buyer_coutry': '',
    };
 
+   var sendToPdf = {
+      'data': {},
+      'sendData': {},
+   }
+
    var Nr = document.getElementById('Nr');
    var Description = document.getElementById('Description');
    var Description_RUS = document.getElementById('Description_RUS');
@@ -166,6 +175,14 @@ td input {
    var showPrice_EUR = document.getElementById('showPrice_EUR');
    var showAmount_EUR = document.getElementById('showAmount_EUR');
    var showAmount_RUB = document.getElementById('showAmount_RUB');
+
+   function sendToWork() {
+      sendToPdf.data = data;
+      sendToPdf.sendData = sendData;
+      let res = JSON.stringify(sendToPdf)
+
+      console.log(res)
+   }
 
    // полностью переписать
    function allAdd() {
