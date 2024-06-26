@@ -21,7 +21,7 @@ td input {
 }
 </style>
 <body>
-<table class="table">
+<table id="sendData" class="table">
    <caption>Отправитель / Получатель</caption>
    <tbody>
       <tr>
@@ -139,6 +139,18 @@ td input {
       'Price_EUR': 5,       // 5
       'Amount_EUR': 6,      // 6
       'Amount_RUB': 7,      // 7
+   };
+
+   // объект Отправитель / Получатель
+   var sendData = {
+      'date_date': '',
+      'from_data': '',
+      'seller_name': '',
+      'buyer_name': '',
+      'seller_street': '',
+      'buyer_street': '',
+      'seller_coutry': '',
+      'buyer_coutry': '',
    };
 
    var Nr = document.getElementById('Nr');
@@ -398,6 +410,15 @@ td input {
       document.getElementById('Nr').innerHTML = Nr;
       totalReset();
    }
+
+   // меняем значение объекта Отправитель / Получатель по ключу
+   document.querySelectorAll('#sendData').forEach(input => {
+      input.addEventListener('input', (e) => {
+         Object.defineProperty(sendData, e.target.name, {
+            value: e.target.value,
+         });
+      });
+   });
 
    window.onload = add(1);
 </script>
