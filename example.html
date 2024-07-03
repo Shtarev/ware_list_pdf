@@ -14,10 +14,14 @@ table tbody tr:nth-child(2n + 1) {
 	background-color: #F2F2E6;
 }
 td {
+   padding-right: 10px;
 	border-bottom: #FF9966 solid 1px;
 }
 td input {
    width: 100%;
+}
+caption {
+   padding-bottom: 20px;
 }
 </style>
 <body>
@@ -80,7 +84,8 @@ td input {
 </table>
 <br><br><br>
 <hr>
-<br>
+<div style="background-color: #c0ebf1;">
+<br><br>
 <table class="table">
    <caption>Добавить товар</caption>
    <thead>
@@ -118,7 +123,8 @@ td input {
 <center>
    <button onclick="sendToWork()">Получить PDF</button>
 </center>
-
+<br>
+</div>
 <script>
    // главный массив
    var data = [
