@@ -53,13 +53,18 @@ foreach($data as $key => $value) {
 	if($key) {
 		$tbody = $tbody . '<tr><td>' . $value[$Nr] . '</td><td>' . $value[$Description] . '</td><td>' . $value[$Description_RUS] . '</td><td>' . $value[$Country] . '</td><td>' . $value[$Qantity] . '</td><td>' . $value[$Price_EUR] . '</td><td>' . $value[$Amount_EUR] . '</td><td>' . $value[$Amount_RUB] . '</td></tr>';
 
-		$Qantity_res = (int)$value[$Qantity] + $Qantity_res;
-		$Price_EUR_res = (int)$value[$Price_EUR] + $Price_EUR_res;
-		$Amount_EUR_res = (int)$value[$Amount_EUR] + $Amount_EUR_res;
-		$Amount_RUB_res = (int)$value[$Amount_RUB] + $Amount_RUB_res;
+		$Qantity_res = (float)$value[$Qantity] + $Qantity_res;
+		$Price_EUR_res = (float)$value[$Price_EUR] + $Price_EUR_res;
+		$Amount_EUR_res = (float)$value[$Amount_EUR] + $Amount_EUR_res;
+		$Amount_RUB_res = (float)$value[$Amount_RUB] + $Amount_RUB_res;
 	}
 
 }
+
+$Qantity_res = round($Qantity_res, 2);
+$Price_EUR_res = round($Price_EUR_res, 2);
+$Amount_EUR_res = round($Amount_EUR_res, 2);
+$Amount_RUB_res = round($Amount_RUB_res, 2);
 
 $html = <<<EOD
 <table border="0" width="100%">
@@ -135,4 +140,4 @@ $mpdf->WriteHTML($html, 2);
 // сохранит под именем mpdf.pdf'
 $mpdf->Output('pdf/pdfs/mpdf.pdf', false);
 // TODO: fix link
-echo json_encode('pdf/pdfs/mpdf.pdf', JSON_UNESCAPED_UNICODE);
+echo json_encode('/pdf/pdfs/mpdf.pdf', JSON_UNESCAPED_UNICODE);
