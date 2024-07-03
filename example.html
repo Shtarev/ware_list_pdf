@@ -75,9 +75,9 @@ caption {
       <tr>
          <td colspan="4" style="text-align: left; padding-left: 10px;">TOTAL:</td>
          <td style="text-align: left; padding-left: 10px;"><span id="showQantity"></span></td>
-         <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="showPrice_EUR"></span></td>
-         <td style="text-align: left; padding-left: 10px;"><span>&#x20AC;&#160;</span><span id="showAmount_EUR"></span></td>
-         <td style="text-align: left; padding-left: 10px;"><span>&#x20bd;&#160;</span><span id="showAmount_RUB"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span id="showPrice_EUR"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span id="showAmount_EUR"></span></td>
+         <td style="text-align: left; padding-left: 10px;"><span id="showAmount_RUB"></span></td>
          <td style="text-align: center;"></td>
       </tr>
    </tfoot>
@@ -125,6 +125,7 @@ caption {
 </center>
 <br>
 </div>
+<div id="pdfDownload"></div>
 <script>
    // главный массив
    var data = [
@@ -197,6 +198,7 @@ caption {
                let result = xhr.responseText;
                let arr = JSON.parse(result);
                console.log(arr);
+               document.getElementById('pdfDownload').innerHTML = '<center><h1><a href="' + arr + '" target="_blank"><font color="#FF6600">Скачать PDF-файл</font> </a></h1><center>';
             }
          }
       }
@@ -319,10 +321,10 @@ caption {
          Description.value,
          Description_RUS.value,
          Country.value,
-         Qantity.value,
-         Price_EUR.value,
-         Amount_EUR.value,
-         Amount_RUB.value
+         (Qantity.value == '') ? 0 : Number(Qantity.value),
+         (Price_EUR.value == '') ? 0 : Number(Price_EUR.value),
+         (Amount_EUR.value == '') ? 0 : Number(Amount_EUR.value),
+         (Amount_RUB.value == '') ? 0 : Number(Amount_RUB.value)
       );
 
       data.push(newRow); // херачим данные в главный массив
@@ -342,10 +344,10 @@ caption {
    }
 
    function inputCheck() {
-      if (Qantity.value === '') {return 'Поле Qantity должно быть числом или числом с точкой и не содержать пробелов'}
-      if (Price_EUR.value === '') {return 'Поле Price_EUR должно быть числом или числом с точкой и не содержать пробелов'}
-      if (Amount_EUR.value === '') {return 'Поле Amount_EUR должно быть числом или числом с точкой и не содержать пробелов'}
-      if (Amount_RUB.value === '') {return 'Поле Amount_RUB должно быть числом или числом с точкой и не содержать пробелов'}
+      if (Qantity.validity.badInput === true) {return 'Поле Qantity должно быть числом или числом с точкой и не содержать пробелов'}
+      if (Price_EUR.validity.badInput === true) {return 'Поле Price_EUR должно быть числом или числом с точкой и не содержать пробелов'}
+      if (Amount_EUR.validity.badInput === true) {return 'Поле Amount_EUR должно быть числом или числом с точкой и не содержать пробелов'}
+      if (Amount_RUB.validity.badInput === true) {return 'Поле Amount_RUB должно быть числом или числом с точкой и не содержать пробелов'}
       return 'ok';
    }
 
@@ -414,23 +416,23 @@ caption {
 
    // обнуляем | выставляем цены
    function totalReset(res = [0,0,0,0]) {
-      showQantity.innerHTML = res[0];
-      showPrice_EUR.innerHTML = res[1];
-      showAmount_EUR.innerHTML = res[2];
-      showAmount_RUB.innerHTML = res[3];
+      showQantity.innerHTML = res[0].toFixed(2);
+      showPrice_EUR.innerHTML = res[1].toFixed(2);
+      showAmount_EUR.innerHTML = res[2].toFixed(2);
+      showAmount_RUB.innerHTML = res[3].toFixed(2);
    }
 
    // изменения в инпуте
    function changes(Nr, name, e) {
       if(name == 'Qantity' || name == 'Price_EUR' || name == 'Amount_EUR' || name == 'Amount_RUB') {
-         if(e.value === '') {
+         if(e.validity.badInput === true) {
             alert('Поле ' + name + ' должно быть числом или числом с точкой и не содержать пробелов');
             e.value = data[Nr][dataMatrix[name]];
             calculator();
             return;
          }
          else {
-            data[Nr][dataMatrix[name]] = e.value;
+            data[Nr][dataMatrix[name]] = Number(e.value)
             calculator();
          }
       }
