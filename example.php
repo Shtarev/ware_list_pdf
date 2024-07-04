@@ -51,7 +51,7 @@ $tbody = '';
 
 foreach($data as $key => $value) {
 	if($key) {
-		$tbody = $tbody . '<tr><td>' . $value[$Nr] . '</td><td>' . $value[$Description] . '</td><td>' . $value[$Description_RUS] . '</td><td>' . $value[$Country] . '</td><td>' . $value[$Qantity] . '</td><td>' . $value[$Price_EUR] . '</td><td>' . $value[$Amount_EUR] . '</td><td>' . $value[$Amount_RUB] . '</td></tr>';
+		$tbody = $tbody . '<tr><td>' . $value[$Nr] . '</td><td>' . $value[$Description] . '</td><td>' . $value[$Description_RUS] . '</td><td>' . $value[$Country] . '</td><td>' . $value[$Qantity] . '</td><td>' . number_format($value[$Price_EUR], 2, '.', '' ) . '</td><td>' . number_format($value[$Amount_EUR], 2, '.', '' ) . '</td><td>' . number_format($value[$Amount_RUB], 2, '.', '' ) . '</td></tr>';
 
 		$Qantity_res = (float)$value[$Qantity] + $Qantity_res;
 		$Price_EUR_res = (float)$value[$Price_EUR] + $Price_EUR_res;
@@ -61,10 +61,10 @@ foreach($data as $key => $value) {
 
 }
 
-$Qantity_res = round($Qantity_res, 2);
-$Price_EUR_res = round($Price_EUR_res, 2);
-$Amount_EUR_res = round($Amount_EUR_res, 2);
-$Amount_RUB_res = round($Amount_RUB_res, 2);
+$Qantity_res = number_format($Qantity_res, 2, '.', '' );
+$Price_EUR_res = number_format($Price_EUR_res, 2, '.', '' );
+$Amount_EUR_res = number_format($Amount_EUR_res, 2, '.', '' );
+$Amount_RUB_res = number_format($Amount_RUB_res, 2, '.', '' );
 
 $html = <<<EOD
 <table border="0" width="100%">
