@@ -1,4 +1,7 @@
 {
+    "scripts": {
+        "post-install-cmd": "mkdir -p -m 777 pdf"
+    },
     "require": {
         "mpdf/mpdf": "^8.2"
     }
