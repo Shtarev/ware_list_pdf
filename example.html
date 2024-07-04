@@ -273,7 +273,8 @@ caption {
             let col = document.createElement('td');
             if(key == 4 || key == 5 || key == 6 || key == 7) {
                let input = document.createElement('input');
-               input.type = 'number'
+               input.type = 'number';
+               input.step = 0.01;
                input.name = data[0][key];
                input.value = value;
                input.setAttribute('oninput', 'changes(' +  newRow[0] + ', "' + data[0][key] + '", this)');
@@ -344,10 +345,10 @@ caption {
    }
 
    function inputCheck() {
-      if (Qantity.validity.badInput === true) {return 'Поле Qantity должно быть числом или числом с точкой и не содержать пробелов'}
-      if (Price_EUR.validity.badInput === true) {return 'Поле Price_EUR должно быть числом или числом с точкой и не содержать пробелов'}
-      if (Amount_EUR.validity.badInput === true) {return 'Поле Amount_EUR должно быть числом или числом с точкой и не содержать пробелов'}
-      if (Amount_RUB.validity.badInput === true) {return 'Поле Amount_RUB должно быть числом или числом с точкой и не содержать пробелов'}
+      if (Qantity.validity.badInput === true) {return 'Поле Qantity должно быть числом или числом с запятой и не содержать пробелов'}
+      if (Price_EUR.validity.badInput === true) {return 'Поле Price_EUR должно быть числом или числом с запятой и не содержать пробелов'}
+      if (Amount_EUR.validity.badInput === true) {return 'Поле Amount_EUR должно быть числом или числом с запятой и не содержать пробелов'}
+      if (Amount_RUB.validity.badInput === true) {return 'Поле Amount_RUB должно быть числом или числом с запятой и не содержать пробелов'}
       return 'ok';
    }
 
@@ -426,7 +427,8 @@ caption {
    function changes(Nr, name, e) {
       if(name == 'Qantity' || name == 'Price_EUR' || name == 'Amount_EUR' || name == 'Amount_RUB') {
          if(e.validity.badInput === true) {
-            alert('Поле ' + name + ' должно быть числом или числом с точкой и не содержать пробелов');
+         console.log(e)
+            alert('Поле ' + name + ' должно быть числом или числом с запятой и не содержать пробелов');
             e.value = data[Nr][dataMatrix[name]];
             calculator();
             return;
