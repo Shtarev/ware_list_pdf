@@ -427,7 +427,6 @@ caption {
    function changes(Nr, name, e) {
       if(name == 'Qantity' || name == 'Price_EUR' || name == 'Amount_EUR' || name == 'Amount_RUB') {
          if(e.validity.badInput === true) {
-         console.log(e)
             alert('Поле ' + name + ' должно быть числом или числом с запятой и не содержать пробелов');
             e.value = data[Nr][dataMatrix[name]];
             calculator();
