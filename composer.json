@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "post-update-cmd": "mkdir -p -m 777 pdf & mkdir -p -m 777 pdf/pdfs"
+        "post-install-cmd": "mkdir -p -m 777 pdf & mkdir -p -m 777 pdf/pdfs"
     },
     "require": {
         "mpdf/mpdf": "^8.2"
