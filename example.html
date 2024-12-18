@@ -417,7 +417,7 @@ caption {
 
    // обнуляем | выставляем цены
    function totalReset(res = [0,0,0,0]) {
-      showQantity.innerHTML = res[0].toFixed(2);
+      showQantity.innerHTML = res[0].toFixed();
       showPrice_EUR.innerHTML = res[1].toFixed(2);
       showAmount_EUR.innerHTML = res[2].toFixed(2);
       showAmount_RUB.innerHTML = res[3].toFixed(2);
